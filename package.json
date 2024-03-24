@@ -1,4 +1,8 @@
 {
+  "name": "Scritch",
+  "description": "Scratchpad for DJs",
+  "version": "0.0.1",
+  "author": "PMCP <github@maartenlauwaert.eu>",
   "private": true,
   "type": "module",
   "scripts": {
