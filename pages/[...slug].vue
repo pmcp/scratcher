@@ -1,22 +1,10 @@
-<template>
-  <main>
-<!--    <ContentDoc />-->
-    <PocPlayer />
-    <div
-    >pos: {{ x
-      }}, {{ y
-      }}</div
-    >
-  </main>
-</template>
-
-
-<script setup lang="ts">
-
-
-const { x
-  , y
-} = useMouse
-()
+<script setup>
+// You might choose this based on an API call or logged-in status
+const layout = "aside";
 </script>
-ate>
+
+<template>
+  <NuxtLayout :name="layout">
+    <PocFlow />
+  </NuxtLayout>
+</template>
