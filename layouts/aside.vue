@@ -1,5 +1,4 @@
 <script setup>
-const { onDragStart } = useDragAndDrop()
 </script><template>
   <UContainer>
     <UPage>
