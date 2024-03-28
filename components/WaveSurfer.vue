@@ -1,16 +1,17 @@
 <template>
-  <div ref="wavesurferMain" @click="togglePlay"></div>
-<!--  <div ref="waveTimeline"></div>-->
+  <div ref="wavesurferContainer" @click="togglePlay"></div>
+  <!--  <div ref="waveTimeline"></div>-->
 </template>
 
 <script setup>
+
+// OPTIM: Save peak data on upload
+// https://github.com/katspaugh/wavesurfer.js/discussions/2932
+
 const props = defineProps({
   src:{
     type:String,
     required:true
-  },
-  peaksData:{
-    type:String,
   },
   options:{
     type:Object,
@@ -18,11 +19,12 @@ const props = defineProps({
 })
 
 const waveSurfer = ref(null);
-const wavesurferMain = ref(null);
-const waveTimeline = ref(null);
+const wavesurferContainer = ref(null);
+
+const WaveSurfer = (await import('wavesurfer.js')).default;
+// const Timeline  = (await import('wavesurfer.js/dist/plugins/timeline.js')).default;
 
 const togglePlay = function(){
-  console.log('here')
   if(waveSurfer.value.isPlaying()) {
     waveSurfer.value.pause()
   } else {
@@ -31,43 +33,37 @@ const togglePlay = function(){
 
 }
 
+const audioBuffer = ref(null)
+
 onMounted(async()=>{
-  const WaveSurfer = (await import('wavesurfer.js')).default;
-  const Timeline  = (await import('wavesurfer.js/dist/plugins/timeline.js')).default;
-  let options = props.options;
   let wsOptions = Object.assign({
-        container: wavesurferMain.value,
-        plugins:[
-          Timeline.create({container:waveTimeline.value})
-        ] },
-      options);
+        container: wavesurferContainer.value,
+      },
+      props.options);
 
   waveSurfer.value = WaveSurfer.create(wsOptions);
-  if (props.peaksData){
-    fetch(props.peaksData)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error("HTTP error " + response.status);
-          }
-          return response.json();
-        })
-        .then(peaks => {
-          waveSurfer.value.load(props.src,peaks.data);
-        })
-        .catch((e) => {
-          console.error('error', e);
-        });
-  }else{
-    waveSurfer.value.load(props.src);
-  }
+  waveSurfer.value.load(props.src);
 
+  waveSurfer.value.on('decode', () => {
+    // Get AudioBuffer data
+    audioBuffer.value = waveSurfer.value.getDecodedData()
+    const peaks = exportPeaks()
+    console.log(peaks)
+  })
+
+
+  const play = waveSurfer.value.getDecodedData()
+
+
+  console.log(play)
 
 })
 onUnmounted(()=>{
   waveSurfer.value.destroy();
 })
 defineExpose({
-  waveSurfer
+  waveSurfer,
+  audioBuffer
 })
 </script>
 

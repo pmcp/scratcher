@@ -1,5 +1,4 @@
-<script setup>
-</script><template>
+<template>
   <UContainer>
     <UPage>
       <template #left>
@@ -7,8 +6,7 @@
           Here
         </UAside>
       </template>
-
-      <slot />
+      <slot class="w-full"/>
     </UPage>
   </UContainer>
 </template>

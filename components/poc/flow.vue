@@ -1,6 +1,5 @@
 <script setup>
 import { Handle, useHandleConnections, VueFlow, useVueFlow, Position, useNodesData,  } from '@vue-flow/core'
-
 import { MiniMap } from '@vue-flow/minimap'
 import { Controls } from '@vue-flow/controls'
 // useVueFlow provides access to the event handlers
@@ -52,88 +51,9 @@ const options = ref({
 
 const nodesRefs = ref([]);
 
-const elements = ref([
-  {
-    id: '1',
-    type: 'song-default',
-    label: 'Speed',
-    position: { x: 250, y: 5 },
-    // pass custom data to the node
-    data: {
-      src: 'speed.m4a',
-      playerOptions: options
-    },
-  },
 
-  {
-    id: '2',
-    type: 'song-default',
-    label: 'Trek',
-    position: { x: 550, y: 5 },
-    data: {
-      src: 'trek.m4a',
-      playerOptions: options
-    },
-  },
-
-  {
-    id: '3',
-    type: 'song-default',
-    label: 'Barracuda',
-    position: { x: 150, y: 5 },
-    data: {
-      src: 'barracuda.m4a',
-      playerOptions: options
-    },
-  },
-
-
-  {
-    id: '4',
-    type: 'song-default',
-    label: 'Barracuda',
-    position: { x: 150, y: 5 },
-    data: {
-      src: 'barracuda.m4a',
-      playerOptions: options
-    },
-  },
-  {
-    id: '5',
-    type: 'song-default',
-    label: 'Barracuda',
-    position: { x: 150, y: 5 },
-    data: {
-      src: 'barracuda.m4a',
-      playerOptions: options
-    },
-  },
-
-  {
-    id: '6',
-    type: 'song-default',
-    label: 'Barracuda',
-    position: { x: 150, y: 5 },
-    data: {
-      src: 'barracuda.m4a',
-      playerOptions: options
-    },
-  },
-
-  // {
-  //   id: '4',
-  //   type: 'resizable',
-  //   label: 'NodeResizer',
-  //   position: { x: 0, y: 0 },
-  //   style: { background: 'red', border: '2px solid black' },
-  // },
-
-
-])
 
 const els = elements.value
-
-
 onConnect((connection) => {
   addEdges(connection)
 })
@@ -166,9 +86,8 @@ elements.value = elements.value.map((node) => ({ ...node, hidden: true }))
 
 <template>
 
-  <VueFlow v-model="els" class="absolute w-full h-full" fit-view-on-init elevate-edges-on-select nodesConnectable connectable connectableEnd connectableStart>
-    <!-- bind your custom node type to a component by using slots, slot names are always `node-<type>` -->
-    <template #node-song-default="{id, data }" >
+  <VueFlow v-model="els" class="" >
+    <template #node-song-default="{id, data }">
 <!--      <NodeToolbar :is-visible="data.toolbarVisible" :position="data.toolbarPosition">-->
 <!--        <button>delete</button>-->
 <!--        <button>copy</button>-->
@@ -192,7 +111,9 @@ elements.value = elements.value.map((node) => ({ ...node, hidden: true }))
 </template>
 
 <style>
-/*!* import the default theme, this is optional but generally recommended *!*/
+@import '@vue-flow/controls/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
-@import '@vue-flow/controls/dist/style.css'
+@import '@vue-flow/minimap/dist/style.css';
+@import '@vue-flow/controls/dist/style.css';
+@import '@vue-flow/node-resizer/dist/style.css';
 </style>

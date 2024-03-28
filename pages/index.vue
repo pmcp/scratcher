@@ -1,10 +1,22 @@
 <script setup>
-// You might choose this based on an API call or logged-in status
-const layout = "aside";
+import {useVueFlow} from "@vue-flow/core";
+
+const PlayerStore = usePlayerStore()
+const NodesStore = useNodesStore()
+const EdgesStore = useEdgesStore()
+const UiStore = useUiStore()
+
 </script>
 
 <template>
-  <NuxtLayout :name="layout">
-    <PocFlow />
-  </NuxtLayout>
+  <scratchPad class="w-full min-h-screen" :options="PlayerStore.defaultOptions" :edges="EdgesStore.all" :nodes="NodesStore.all"/>
 </template>
+
+
+<style>
+/* import the necessary styles for Vue Flow to work */
+@import '@vue-flow/core/dist/style.css';
+
+/* import the default theme, this is optional but generally recommended */
+@import '@vue-flow/core/dist/theme-default.css';
+</style>

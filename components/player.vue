@@ -1,15 +1,26 @@
 <template>
-  <div class="bg-black rounded-lg bg-opacity-40 p-2">
-<div class="nodrag w-40 h-40 rounded-full  overflow-hidden">
-      <WaveSurfer class=" " ref="refWaveSurfer" :src="src"  :options="options"/>
-</div>
-  </div>
+  <UCard>
+    <template #header>
+      <h1>{{ data.title }} - {{ data.artist }}</h1>
+
+    </template>
+        <WaveSurfer v-if="src" class="w-full" ref="refWaveSurfer" :src="src"  :options="options"/>
+    <template #footer>
+      <UButton @click="setBPM"></UButton>
+    </template>
+  </UCard>
 </template>
 <script setup>
+
+const PlayerStore = usePlayerStore()
 
 const props = defineProps({
   src:{
     type:String,
+    required:true
+  },
+  data: {
+    type: Object,
     required:true
   },
   options:{
@@ -17,48 +28,38 @@ const props = defineProps({
   }
 })
 
-import { guess  } from 'web-audio-beat-detector';
-
 const refWaveSurfer = ref(null);
-
 const play = function play() {
   refWaveSurfer.value.waveSurfer.play();  // Calling the play method
-
-
-
-
 }
-
-defineExpose({
-  play
-})
 
 function pause(){
   refWaveSurfer.value.waveSurfer.pause();  // Calling the pause method
 }
 
-function resetBPM() {
+defineExpose({
+  play, pause
+})
 
+
+
+function resetBPM() {
   refWaveSurfer.value.waveSurfer.setPlaybackRate(1, true);  // Calling the pause method
 }
+
 function setBPM({targetBpm, preservePitch}){
   // Get "original" bpm song
-  const audioBuffer = refWaveSurfer.value.waveSurfer.getDecodedData()
-  guess(audioBuffer, { maxTempo: 190, minTempo: 70 })
-      .then(({ bpm, offset, tempo }) => {
-        console.log(bpm, offset, tempo)
-        // Calculate diff = (final - original)/ original
-        const BpmDiff = (targetBpm - bpm) / bpm
-        const newPlaybackRate = 1 + BpmDiff
-        console.log(`new PlaybackRate = ${newPlaybackRate}`)
-        // set playback rate
-        refWaveSurfer.value.waveSurfer.setPlaybackRate(newPlaybackRate, preservePitch);  // Calling the pause method
-      })
-      .catch((err) => {
-        console.log(err)
-        // something went wrong
-      });
-  //
+  console.log(refWaveSurfer.value)
+  // OPTIMISE: On upload, analyse BPM
+  const audioBuffer = refWaveSurfer.value.audioBuffer
+  console.log('got audioBuffer', audioBuffer)
+  // Calculate new BPM
+  const oldBPM = PlayerStore.calculateBPM(audioBuffer, targetBpm)
+  console.log('NEW', oldBPM)
+
+  // Set new BPM
+  refWaveSurfer.value.waveSurfer.setPlaybackRate(newPlaybackRate, preservePitch);  // Calling the pause method
+
 
 }
 </script>
