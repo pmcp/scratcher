@@ -26,7 +26,7 @@ export const usePlayerStore = defineStore('player', () => {
     })
 
 
-    const calculateBPM = function () {
+    const calculateBPM = function (file) {
         return guess(audioBuffer, { maxTempo: 190, minTempo: 70 })
             .then(({ bpm, offset, tempo }) => {
                 console.log(bpm, offset, tempo)

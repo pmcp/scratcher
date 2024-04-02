@@ -7,9 +7,10 @@
 - As a user i want to connect samples to songs
 - As a user i want to add spotify songs, so i can test them out in my pad 
 - As a user i want to see at a glance what nodes are full songs, samples or spotify previews
+- As a user i want to search for a song so i can see what other songs are connected to it
 
-
-
+https://uiverse.io/Praashoo7/average-swan-99
+https://codepen.io/nicolasjesenberger/pen/gOqzJed
 
 # THIS PHASE
 

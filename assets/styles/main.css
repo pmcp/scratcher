@@ -1,0 +1,5 @@
+body {
+    background-color: #bbb;
+    background-image: url('/assets/images/noise.png');
+    background-size: 80px 80px;
+}

@@ -34,8 +34,12 @@ function onAdd() {
 <template>
   <Panel position="top-right" class="save-restore-controls">
     <div class="flex gap-4">
-      <UButton @click="onSave">save</UButton>
-      <UButton @click="onRestore">restore</UButton>
+      <UiButtonRect @click="onSave" :variation="2">
+        Save
+      </UiButtonRect>
+      <UiButtonRect @click="onRestore" :variation="1">
+        Restore
+      </UiButtonRect>
     </div>
 
   </Panel>

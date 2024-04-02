@@ -15,8 +15,7 @@ const {
   onNodeMouseLeave,
   onNodeMouseMove,
   onConnect,
-  addEdges,
-  onPaneReady
+  addEdges
 } = useVueFlow()
 
 const props = defineProps({
@@ -30,11 +29,6 @@ const props = defineProps({
   edges:{
     type: Array,
   }
-})
-
-// logic
-onPaneReady(({ fitView }) => {
-  fitView()
 })
 
 onConnect((connection) => {
@@ -59,17 +53,24 @@ onMounted(() => {
 
     <template :key="id" #node-song-default="{id, data }">
       <Handle type="target" :position="Position.Left" :on-connect="onConnect" />
+      <div class="w-8 h-8 bg-black"></div>
       <player v-if="data.src" :data="data" class="w-96" :src="data.src" :options="props.options" :id="id" />
       <Handle type="source" :position="Position.Right"  />
     </template>
     <Background />
-    <MiniMap />
+<!--    <MiniMap />-->
     <Controls />
     <PocControls />
+    <template #connection-line="{ sourceX, sourceY, targetX, targetY }">
+      <FlowLine :source-x="sourceX" :source-y="sourceY" :target-x="targetX" :target-y="targetY" />
+    </template>
+
+    <DropzoneBackground
+        :style="{
+          backgroundColor: isDragOver ? '#e7f3ff' : 'transparent',
+          transition: 'background-color 0.2s ease',
+        }"
+    />
   </VueFlow>
 
 </template>
-
-<style>
-@import '/assets/style/main.css';
-</style>
