@@ -1,49 +1,32 @@
 <script setup>
-import {useVueFlow} from "@vue-flow/core";
-
-const PlayerStore = usePlayerStore()
-const NodesStore = useNodesStore()
-const EdgesStore = useEdgesStore()
-
-
-
-onMounted(() => {
-// On Drag Over: show Dropzone
-  useEventListener(document, 'dragenter', (e) => {
-    if(dragging.value === true) return;
-    draggingFiles.value = Object.values(e.dataTransfer.items).length
-    dragging.value = true;
-  })
-
-  useEventListener(filesDropzone, 'dragleave', (e) => {
-    if(dragging.value === false) return;
-    dragging.value = false
-  })
-
-})
-
-// UI
-
-const filesDropzone = ref(null)
-const dragging = ref(false)
-const draggingFiles = ref([])
-
+  const PlayerStore = usePlayerStore()
+  const NodesStore = useNodesStore()
+  const EdgesStore = useEdgesStore()
+  const UiStore = useUiStore()
+  const ProjectsStore = useProjectsStore()
 
 </script>
 
 <template>
-<!--  <pre>{{ NodesStore.all }}</pre>-->
+  <ProjectDropzone/>
   <FlowMain class="w-full min-h-screen" :options="PlayerStore.defaultOptions" :edges="EdgesStore.all" :nodes="NodesStore.all"/>
-  <div class="absolute bottom-8 flex w-full justify-center">
+  <div class="absolute bottom-8 flex w-full justify-center" v-if="!UiStore.draggingFiles">
     <div class="w-full max-w-2xl px-4">
+      <div class="relative">
+        <ProjectMenu class="absolute top-0 left-0">
+          <ItemsList :items="NodesStore.all" :options="PlayerStore.defaultOptions"></ItemsList>
+        </ProjectMenu>
+      </div>
+
       <UiPane>
-        <div class="w-full flex justify-right pr-6">
-          <UiLed :type="3"/>
-        </div>
+
+          <span v-if="ProjectsStore.activeProject">{{ ProjectsStore.activeProject.bpm}} Bpm</span>
+          <span v-else>{{ ProjectsStore.defaultBpm}}</span>
+
       </UiPane>
     </div>
   </div>
-  <PocDropzone ref="filesDropzone" v-if="dragging" :files="draggingFiles"/>
+
 </template>
 
 <style>

@@ -1,3 +1,14 @@
+# MAKE IT WORK
+
+
+# MAKE IT BEAUTIFUL
+https://jerosoler.github.io/waveform-path/
+
+# MAKE IT FAST
+
+
+
+
 # USER STORIES
 - As a dj I want to quickly here the total progression of my mix, so I can hear of overall vibe and intensity is correct.
   - Make selection (ai?) of parts in song, per scratchpad it can be played
@@ -12,6 +23,5 @@
 https://uiverse.io/Praashoo7/average-swan-99
 https://codepen.io/nicolasjesenberger/pen/gOqzJed
 
-# THIS PHASE
 
 # FIX

@@ -13,9 +13,15 @@ export const usePbStore = defineStore('Pb', () => {
 
     }
 
-    const create = async function(name, data){
-        return await $pb.collection(name).create(data);
+    const create = async function(collection, data){
+        return await $pb.collection(collection).create(data);
 
+    }
+
+    const update = async function(collection, item, data){
+        // TODO: Make this universal and permeated
+        await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
+        return await $pb.collection(collection).update(item, data);
     }
 
     const getCollection = async function(name){
@@ -31,12 +37,18 @@ export const usePbStore = defineStore('Pb', () => {
         return $pb.files.getUrl(id, filename, formats);
     }
     const getItem = async function(collection, id, expand){
+        // TODO: get this out of here
+        await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
+
+        console.log('pb Store', 'getItem', 'params:', {collection}, {id}, {expand})
         return await $pb.collection(collection).getOne(id, {
             expand: expand,
         });
+
     }
 
     const uploadFiles = async function(file){
+        // TODO: Make this universal and permeated
         await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
 
         console.log($pb.authStore.isValid);
@@ -51,6 +63,28 @@ export const usePbStore = defineStore('Pb', () => {
         return createdItems.id
     }
 
+    const subscribeSingle = async function(collection, record) {
+        console.log('subscribing', collection, record);
+        const projectsStore = useProjectsStore()
+        $pb.collection(collection).subscribe(record, function (e) {
+            console.log('subscription', e.record);
+            if(collection === 'projects') {
+                projectsStore.setProject(e.record)
+                // TODO: On subscribing, there is no 'expand' yet, update when available
+                // Easiest way to fix this: run getting project again
+                // TODO: Should be heavily optimized
+                const flowStore = useFlowStore()
+                flowStore.getProject(`/${record}`, true)
+            }
 
-    return { doAuth, getCollection, uploadFiles, create, getItem, getFileUrl }
+        });
+
+    }
+
+    const unsubscribeSingle = async function(collection, record) {
+        $pb.collection(collection).unsubscribe(record);
+    }
+
+
+    return { doAuth, getCollection, uploadFiles, create, getItem, getFileUrl, update, subscribeSingle, unsubscribeSingle }
 })

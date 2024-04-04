@@ -68,5 +68,20 @@
       <UiLed :type="3"/>
     </div>
 
+    <h1 class="pt-8">LABELS</h1>
+    <div class="flex gap-4">
+      <UiLabel>
+        Label
+      </UiLabel>
+      <UiLabel :type="1">
+        Label
+      </UiLabel>
+      <UiLabel :type="2">
+        Label
+      </UiLabel>
+<!--      <UiLabel :type="3"/>-->
+    </div>
+
+
   </div>
 </template>

@@ -4,6 +4,8 @@ import { MiniMap } from '@vue-flow/minimap'
 import { Controls } from '@vue-flow/controls'
 import { Background } from '@vue-flow/background'
 // useVueFlow provides access to the event handlers
+const flowStore = useFlowStore()
+
 const {
   onNodeDragStart,
   onNodeDrag,
@@ -31,7 +33,13 @@ const props = defineProps({
   }
 })
 
+
+onNodeDragStop((value) => {
+  flowStore.flowUpdate('onNodeDragStop', value)
+})
+
 onConnect((connection) => {
+  console.log('onConnect', connection)
   addEdges(connection)
 })
 
@@ -53,8 +61,7 @@ onMounted(() => {
 
     <template :key="id" #node-song-default="{id, data }">
       <Handle type="target" :position="Position.Left" :on-connect="onConnect" />
-      <div class="w-8 h-8 bg-black"></div>
-      <player v-if="data.src" :data="data" class="w-96" :src="data.src" :options="props.options" :id="id" />
+      <AudioPlayer v-if="data.src" :data="data" class="w-96" :src="data.src" :options="props.options" :id="id"/>
       <Handle type="source" :position="Position.Right"  />
     </template>
     <Background />
@@ -65,12 +72,12 @@ onMounted(() => {
       <FlowLine :source-x="sourceX" :source-y="sourceY" :target-x="targetX" :target-y="targetY" />
     </template>
 
-    <DropzoneBackground
-        :style="{
-          backgroundColor: isDragOver ? '#e7f3ff' : 'transparent',
-          transition: 'background-color 0.2s ease',
-        }"
-    />
+<!--    <FlowDropzoneBackground-->
+<!--        :style="{-->
+<!--          backgroundColor: isDragOver ? '#e7f3ff' : 'transparent',-->
+<!--          transition: 'background-color 0.2s ease',-->
+<!--        }"-->
+<!--    />-->
   </VueFlow>
 
 </template>

@@ -1,4 +1,6 @@
 <template>
-   <ProjectMain :id="null" />
+  <!--  TODO: Move to layout-->
+  <ProjectMessages />
+  <ProjectMain :id="null" />
 </template>
 

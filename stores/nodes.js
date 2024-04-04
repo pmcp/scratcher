@@ -39,12 +39,17 @@ export const useNodesStore = defineStore('nodes', () => {
     // const all = computed(() => allNodes.value.map(x => getLibraryItem(x)))
 
     const allNodes = ref([])
-    const projectStore = useProjectsStore()
-    const all = computed(() => {
-        console.log('HERE', allNodes.value)
-        const
 
-        allNodes.value.map(node => {
+    const setNodes = function(items){
+        console.log({
+            store: 'nodes',
+            var: 'setNodes',
+            input: items
+        })
+        allNodes.value = items
+    }
+    const all = computed(() => {
+        return allNodes.value.map(node => {
             return {
                 id: node.id,
                 type: node.type,
@@ -60,9 +65,12 @@ export const useNodesStore = defineStore('nodes', () => {
                 }
             }
         })
-
     })
 
+    const update = async function(nodeId, data){
+        const updatedNode = await Pb.update('nodes', nodeId, data)
+        return updatedNode;
+    }
 
     const create = async function(node){
         const createdNode = await Pb.create('nodes', node)
@@ -71,5 +79,5 @@ export const useNodesStore = defineStore('nodes', () => {
     }
 
 
-    return { allNodes, all, create }
+    return { allNodes, all, update, create, setNodes }
 })

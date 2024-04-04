@@ -1,6 +1,9 @@
 <template>
-  <div ref="wavesurferContainer" @click="togglePlay"></div>
-  <!--  <div ref="waveTimeline"></div>-->
+  <div class="w-full">
+    <div ref="wavesurferContainer" @click="togglePlay" class="w-full"></div>
+    <UProgress v-if="!ready" animation="carousel" />
+  </div>
+<!--    <div ref="waveTimeline"></div>-->
 </template>
 
 <script setup>
@@ -17,6 +20,10 @@ const props = defineProps({
     type:Object,
   }
 })
+
+// UI
+const ready = ref(false)
+const loadingValue = ref(0)
 
 const waveSurfer = ref(null);
 const wavesurferContainer = ref(null);
@@ -36,6 +43,7 @@ const togglePlay = function(){
 const audioBuffer = ref(null)
 
 onMounted(async()=>{
+  // TODO: add loader
   let wsOptions = Object.assign({
         container: wavesurferContainer.value,
       },
@@ -54,6 +62,27 @@ onMounted(async()=>{
 
   const play = waveSurfer.value.getDecodedData()
 
+  /** During audio loading */
+  waveSurfer.value.on('loading', (percent) => {
+    console.log('Loading', percent + '%')
+    loadingValue.value = percent
+  })
+
+  /** When the audio has been decoded */
+  waveSurfer.value.on('decode', (duration) => {
+    console.log('Decode', duration + 's')
+  })
+
+  /** When the audio is both decoded and can play */
+  waveSurfer.value.on('ready', (duration) => {
+    console.log('Ready', duration + 's')
+    ready.value = true;
+  })
+
+  /** When visible waveform is drawn */
+  waveSurfer.value.on('redrawcomplete', () => {
+    console.log('Redraw began')
+  })
 
   console.log(play)
 

@@ -15,6 +15,7 @@
   color: var(--color1);
   position: relative;
   overflow: hidden;
+  font-family: 'tech', sans-serif;
 }
 .pane__content {
   width: 100%;
@@ -23,6 +24,10 @@
   padding: var(--spacing);
   border-style: solid;
   border-width: 0 var(--spacing) 0 var(--spacing);
+  display: flex;
+  align-items: center;
+  font-size: 1em;
+  padding-left: 1em;
 
 }
 
