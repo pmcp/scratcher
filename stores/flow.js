@@ -166,6 +166,36 @@ export const useFlowStore = defineStore('flow', () => {
 
     }
 
+    const cloneNode = async function(nodeId) {
+        // TODO: Should go to server: copy node based on Id, and add to project
+        const NodesStore = useNodesStore()
+        const nodeToCopy = await NodesStore.getSingle(nodeId)
 
-    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode }
+
+        // Create new node with content of nodeToCopy
+        console.log(nodeToCopy)
+
+
+
+        const prepNode = {
+            data: nodeToCopy.data,
+            position: {
+                x: nodeToCopy.position.x + 200,
+                y: nodeToCopy.position.y + 200
+            },
+            type: nodeToCopy.type
+        }
+        const copiedNode = await NodesStore.create(prepNode)
+
+        // Add new Node to project
+        const ProjectsStore = useProjectsStore()
+        const activeProject = ProjectsStore.activeProject.id
+        console.log('COPIED', copiedNode)
+        await ProjectsStore.update(activeProject, {'items+': copiedNode.id})
+
+
+    }
+
+
+    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode }
 })

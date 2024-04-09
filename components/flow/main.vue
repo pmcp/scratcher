@@ -53,14 +53,12 @@ onEdgeDoubleClick((value) => {
 
 const cloneNode = ((val) => {
   console.log('going to clone node', val)
+  flowStore.cloneNode(val)
 })
 
 const removeNode = ((val) => {
   // Get connected edges
   const connectedEdges = getConnectedEdges(val)
-
-  console.log('going to remove node', val, connectedEdges)
-
   flowStore.removeNode(val, connectedEdges)
 })
 

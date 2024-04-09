@@ -37,7 +37,7 @@ export const useNodesStore = defineStore('nodes', () => {
 
     const create = async function(node){
         const createdNode = await Pb.create('nodes', node)
-        console.log('created project', createdNode)
+        console.log('created node', createdNode)
         return createdNode
     }
 
@@ -47,7 +47,11 @@ export const useNodesStore = defineStore('nodes', () => {
         return removedNode
     }
 
+    const getSingle = async function(nodeId){
+        console.log('get single Node', nodeId)
+        const node = await Pb.getItem('nodes', nodeId, '')
+        return node
+    }
 
-
-    return { allNodes, all, update, create, setNodes, remove }
+    return { allNodes, all, update, create, setNodes, remove, getSingle }
 })
