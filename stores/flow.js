@@ -1,4 +1,9 @@
+import {useVueFlow} from "@vue-flow/core";
+
 export const useFlowStore = defineStore('flow', () => {
+
+    // A BIT CONFUSING, BUT THIS IS FLOW, AS IN THE APP FLOW, NOT THE VUEFLOW COMPONENT
+
     const Pb = usePbStore()
     const login = async function(name, pass){
         // Login
@@ -15,17 +20,24 @@ export const useFlowStore = defineStore('flow', () => {
     }
 
     const getProject = async function(projectId, subscriptionCallback){
-        console.log('getting project', projectId)
         const ProjectsStore = useProjectsStore()
         // It comes in with a slash at the beginning, remove
         const project = await ProjectsStore.getProject(projectId.substring(1))
         console.log('got project', project)
 
-        // Set nodes (if there are any)
+        // Set nodes or edges (if there are any)
         if(project.expand) {
-            const NodesStore = useNodesStore()
-            NodesStore.setNodes(project.expand.items)
+            if(project.expand.items) {
+                const NodesStore = useNodesStore()
+                NodesStore.setNodes(project.expand.items)
+            }
+
+            if(project.expand.edges) {
+                const EdgesStore = useEdgesStore()
+                EdgesStore.setEdges(project.expand.edges)
+            }
         }
+
 
         // Set project as Active
         ProjectsStore.setProject(project)
@@ -56,9 +68,7 @@ export const useFlowStore = defineStore('flow', () => {
             return nodeId.id;
         }));
 
-        // If project is just a hash, we are at home, so new project needs to be created
-
-        console.log(project)
+        // If project is just a slash, we are at home, so new project needs to be created
         if(project === '/') {
 
             const project = {
@@ -69,29 +79,14 @@ export const useFlowStore = defineStore('flow', () => {
             const createdProject = await ProjectsStore.create(project)
             router.push({ path: `/${createdProject.id}` })
 
+            return createdProject.id
+
         } else {
-            console.log('updating project')
-            // Update project
-            // Project comes in with a slash at the beginning, remove
-            const existingProjectId = project.substring(1)
-
-            // Get existing Data
-            // Maybe shouldn't do this, just get it from the State
-            const activeProject = await Pb.getItem('projects', existingProjectId, '')
-
-            // Add new items
-            const updatedData = {
-                ...activeProject, items: [...activeProject.items, ...nodeIds]
-            }
-
-            const updatedProject = await ProjectsStore.update(existingProjectId, updatedData)
-            console.log(updatedProject)
+            console.log('updating project', nodeIds)
+            const ProjectsStore = useProjectsStore()
+            const updatedProject = await ProjectsStore.update(ProjectsStore.activeProject.id, {'items+': nodeIds})
+            return updatedProject.id
         }
-
-
-
-        // return createdProject.id
-
     }
 
     const draggingFiles = function(draggingOver){
@@ -118,5 +113,59 @@ export const useFlowStore = defineStore('flow', () => {
         }
     }
 
-    return { login, getProject, draggingFiles, uploadFiles, flowUpdate }
+    const connectEdge = async function(edge) {
+        console.log('connecting edge', edge)
+        const ProjectsStore = useProjectsStore()
+        const activeProject = ProjectsStore.activeProject
+
+        const edgesStore = useEdgesStore()
+        const cleanEdge = {
+            source: edge.source,
+            target: edge.target
+        }
+        const createdEdge = await edgesStore.create(cleanEdge)
+        // Add edge to the project
+        const updatedProject = await ProjectsStore.update(activeProject.id, {'edges+': createdEdge.id})
+        return updatedProject.id
+    }
+
+    const removeEdges = async function(edges) {
+        console.log('removing edges', edges)
+        const ProjectsStore = useProjectsStore()
+        const EdgesStore = useEdgesStore()
+        const activeProject = ProjectsStore.activeProject
+
+        // Remove edges from the project
+        const updatedProject = await ProjectsStore.update(activeProject.id, {'edges-': edges})
+
+        // Remove edge from Database
+        // TODO: update with transactional or on the server when ready, so can remove multiple at once
+
+        for (var i = 0; i < edges.length; i++) {
+            EdgesStore.remove(edges[i])
+        }
+
+    }
+
+    const removeNode = async function(nodeId, connectedEdges) {
+        // reduce edges to ids
+        if(connectedEdges.length > 0) {
+            let connectedEdgesIds = []
+            for (var i = 0; i < connectedEdges.length; i++) {
+                console.log(connectedEdgesIds.push(connectedEdges[i].id))
+            }
+            // remove edge from project
+            this.removeEdges(connectedEdgesIds)
+        }
+
+        // remove Node
+        const NodesStore = useNodesStore()
+        const removedNode = NodesStore.remove(nodeId)
+        return removedNode.id
+
+
+    }
+
+
+    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode }
 })

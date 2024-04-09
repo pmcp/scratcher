@@ -52,10 +52,13 @@ function setBPM({targetBpm, preservePitch}){
 
 <template>
   <div class="player__card flex flex-col w-96">
-    <div class="player__info">
-      <div class="player__info__artist">{{ data.title }}</div>
-      <div class="player__info__title">{{ data.artist }}</div>
-    </div>
+    <slot name="actionButtons" />
+
+<!--    <div class="player__info">-->
+<!--      <div class="player__info__artist">{{ data.title }}</div>-->
+<!--      <div class="player__info__title">{{ data.artist }}</div>-->
+
+<!--    </div>-->
     <UiPane>
       <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src"  :options="options"/>
     </UiPane>

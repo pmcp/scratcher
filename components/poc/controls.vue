@@ -6,13 +6,15 @@ const flowKey = 'example-flow'
 const { nodes, addNodes, dimensions, toObject, fromObject } = useVueFlow()
 
 function onSave() {
+
   console.log(JSON.stringify(toObject()))
   localStorage.setItem(flowKey, JSON.stringify(toObject()))
 }
 
 function onRestore() {
-  const flow = JSON.parse(localStorage.getItem(flowKey))
 
+  const flow = JSON.parse(localStorage.getItem(flowKey))
+  console.log(flow)
   if (flow) {
     fromObject(flow)
   }

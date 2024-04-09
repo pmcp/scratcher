@@ -1,43 +1,6 @@
 
 export const useNodesStore = defineStore('nodes', () => {
     const Pb = usePbStore()
-    const library = useLibraryStore()
-
-
-    // const allNoData = [
-    //     {
-    //         id: 'a',
-    //         type: 'song-default',
-    //         label: 'Speed',
-    //         position: { x: 250, y: 5 },
-    //         data: 1
-    //     },
-    //     {
-    //         id: 'b',
-    //         type: 'song-default',
-    //         label: '138 Trek',
-    //         position: { x: 550, y: 5 },
-    //         data: 2
-    //     },
-    //     {
-    //         id: 'c',
-    //         type: 'song-default',
-    //         label: 'Barracuda',
-    //         position: { x: 150, y: 5 },
-    //         data: 3
-    //     }
-    // ]
-    //
-    //
-
-    //
-    // const getLibraryItem = function(node){
-    //     const libraryItem = library.all.find(i => i.id === node.data);
-    //     return {...node, data: libraryItem }
-    // }
-    //
-    // const all = computed(() => allNodes.value.map(x => getLibraryItem(x)))
-
     const allNodes = ref([])
 
     const setNodes = function(items){
@@ -78,6 +41,13 @@ export const useNodesStore = defineStore('nodes', () => {
         return createdNode
     }
 
+    const remove = async function(nodeId){
+        console.log('removing Node', nodeId)
+        const removedNode = await Pb.deleteSingle('nodes', nodeId)
+        return removedNode
+    }
 
-    return { allNodes, all, update, create, setNodes }
+
+
+    return { allNodes, all, update, create, setNodes, remove }
 })

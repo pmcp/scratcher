@@ -116,4 +116,6 @@ elements.value = elements.value.map((node) => ({ ...node, hidden: true }))
 @import '@vue-flow/minimap/dist/style.css';
 @import '@vue-flow/controls/dist/style.css';
 @import '@vue-flow/node-resizer/dist/style.css';
+
+
 </style>

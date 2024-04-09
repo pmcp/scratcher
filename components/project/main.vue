@@ -19,10 +19,8 @@
       </div>
 
       <UiPane>
-
-          <span v-if="ProjectsStore.activeProject">{{ ProjectsStore.activeProject.bpm}} Bpm</span>
-          <span v-else>{{ ProjectsStore.defaultBpm}}</span>
-
+        <span v-if="ProjectsStore.activeProject">{{ ProjectsStore.activeProject.bpm}} Bpm</span>
+        <span v-else>{{ ProjectsStore.defaultBpm}}</span>
       </UiPane>
     </div>
   </div>

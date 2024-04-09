@@ -85,6 +85,10 @@ export const usePbStore = defineStore('Pb', () => {
         $pb.collection(collection).unsubscribe(record);
     }
 
+    const deleteSingle = async function(collection, record) {
+        $pb.collection(collection).delete(record);
+    }
 
-    return { doAuth, getCollection, uploadFiles, create, getItem, getFileUrl, update, subscribeSingle, unsubscribeSingle }
+
+    return { doAuth, getCollection, uploadFiles, create, getItem, getFileUrl, update, subscribeSingle, unsubscribeSingle, deleteSingle }
 })

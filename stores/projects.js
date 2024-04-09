@@ -17,8 +17,9 @@ export const useProjectsStore = defineStore('projects', () => {
     }
 
     const getProject = async function(projectId) {
+        // TODO: Should have called items "nodes". Don't feel like changing now, but should.
         console.log('Project store', 'getProject', {projectId})
-        const project = await Pb.getItem('projects', projectId, 'items.data')
+        const project = await Pb.getItem('projects', projectId, 'items.data,edges')
         console.log('Got project', project)
         return project
     }
@@ -34,6 +35,7 @@ export const useProjectsStore = defineStore('projects', () => {
 
 
     const update = async function(projectId, data) {
+        console.log('updating project', projectId, data)
         const updatedProject = await Pb.update('projects', projectId, data)
         return updatedProject
     }
