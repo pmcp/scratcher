@@ -8,7 +8,7 @@
 
 <script setup>
 
-// OPTIM: Save peak data on upload
+// OPTIM: Save peak data on first load
 // https://github.com/katspaugh/wavesurfer.js/discussions/2932
 
 const props = defineProps({

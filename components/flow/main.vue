@@ -68,9 +68,9 @@ onMounted(() => {
 <!--    <MiniMap />-->
     <Controls />
     <PocControls />
-    <template #connection-line="{ sourceX, sourceY, targetX, targetY }">
-      <FlowLine :source-x="sourceX" :source-y="sourceY" :target-x="targetX" :target-y="targetY" />
-    </template>
+<!--    <template #connection-line="{ sourceX, sourceY, targetX, targetY }">-->
+<!--      <FlowLine :source-x="sourceX" :source-y="sourceY" :target-x="targetX" :target-y="targetY" />-->
+<!--    </template>-->
 
 <!--    <FlowDropzoneBackground-->
 <!--        :style="{-->
