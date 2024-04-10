@@ -3,6 +3,9 @@
 :root {
     --spacing: .4em;
 
+    /* RHYTHM */
+    --buttonSize: 5em;
+
     /* COLORS */
     --color1: #F2F2F2;
     --color2: #F2EFED;

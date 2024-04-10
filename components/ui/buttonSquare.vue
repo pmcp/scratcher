@@ -32,7 +32,7 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5em;
+  width: var(--buttonSize);
   height: 5em;
   background-color: var(--color7);
   border-radius: 5px;
@@ -108,6 +108,15 @@ defineProps({
 
 .button-square__align--center {
   align-items: center;
+}
+
+.button-square__align--left {
+  align-items: flex-start;
+  justify-content: start;
+  padding-top: 6px;
+  padding-left: 10px;
+  font-size: 1.4em;
+
 }
 
 .button-square__led {

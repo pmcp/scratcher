@@ -62,25 +62,20 @@ function setBPM({targetBpm, preservePitch}){
     <UiPane>
       <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src"  :options="options"/>
     </UiPane>
+
+    <slot name="sectionButtons" />
+
+
     <div class="player__controls">
-      <UiButtonSquare :variation="1" align="top">
-        <template v-slot:label>
-          BPM
-        </template>
-        <template v-slot:led>
-          <UiLed :type="0"/>
-        </template>
-      </UiButtonSquare>
-      <UiButtonSquare :variation="1" align="top">
-        <template v-slot:label>
-          Sound
-        </template>
-      </UiButtonSquare>
-      <UiButtonSquare :variation="2" align="top">
-        <template v-slot:label>
-          Record
-        </template>
-      </UiButtonSquare>
+      <UiButtonRect :variation="1" align="top">
+        BPM
+      </UiButtonRect>
+      <UiButtonRect :variation="1" align="top">
+        KEY
+      </UiButtonRect>
+      <UiButtonRect :variation="2" align="top">
+        LOOP
+      </UiButtonRect>
     </div>
   </div>
 </template>
@@ -123,7 +118,7 @@ function setBPM({targetBpm, preservePitch}){
   height: auto;
   display: flex;
   flex-direction: row;
-  gap: .4em;
+  gap: .5em;
   background: linear-gradient(
       to bottom,
       hsla(0,0%,75%,0.65) 0%,

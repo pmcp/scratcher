@@ -28,7 +28,7 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  width: auto;
+  width: var(--buttonSize);
   height: 2em;
   background-color: var(--color7);
   border-radius: 5px;

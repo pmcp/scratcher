@@ -91,6 +91,19 @@ onMounted(() => {
             </UiButtonRect>
           </div>
         </template>
+
+        <template v-slot:sectionButtons>
+          <div class="p-4 flex gap-2" >
+            <UiButtonSquare @click="toggleSection(i)" :variation="3" align="left" v-for="i in 4">
+              <template v-slot:label>
+                {{ i }}
+              </template>
+
+            </UiButtonSquare>
+          </div>
+        </template>
+
+
       </AudioPlayer>
       <Handle type="source" :position="Position.Right"  />
     </template>
