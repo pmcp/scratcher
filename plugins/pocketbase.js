@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase';
 
 export default defineNuxtPlugin(async () => {
     // TODO: Add this to env
-    const pb = new PocketBase('https://scritch.pockethost.io/');
+    const pb = new PocketBase('http://127.0.0.1:8090');
 
     const cookie = useCookie('pb_auth', {
         path:     '/',
