@@ -61,10 +61,14 @@ export const useFlowStore = defineStore('flow', () => {
         const nodeIds = await Promise.all(files.map(async (file) => {
             const fileId = await Pb.uploadFiles(file);
             // For each file, create a Node
+
+            // Get the default regions settings from Regions store
+            const RegionsStore = useRegionsStore()
             const node = {
                 type: 'song-default',
                 position: position,
-                data: fileId
+                data: fileId,
+                regions: RegionsStore.defaultRegions
             }
             const nodeId = await NodesStore.create(node)
             return nodeId.id;
@@ -110,8 +114,6 @@ export const useFlowStore = defineStore('flow', () => {
             const activeNode = nodesStore.allNodes.find(node => node.id === val.node.id);
             const newData = {...activeNode, position: newPosition}
             const updatedNode = await nodesStore.update(val.node.id, newData)
-             console.log('updatedNode', updatedNode)
-            // HOW TO MAKE NODES UPDATE?
         }
     }
 
@@ -194,10 +196,26 @@ export const useFlowStore = defineStore('flow', () => {
         const activeProject = ProjectsStore.activeProject.id
         console.log('COPIED', copiedNode)
         await ProjectsStore.update(activeProject, {'items+': copiedNode.id})
+    }
+
+
+    const updateRegionTiming = async function(nodeId, start, end, regionColor) {
+        console.log(nodeId, start, end, regionColor)
+        // TODO: I'm finding out with region this is, by checking the color. Not the most robust way of doing this.
+        const RegionsStore = useRegionsStore()
+        const regionIndex = RegionsStore.regionColors.findIndex(color => color === regionColor)
+        console.log('Got region index', regionIndex)
+        // With this index: update the region timing of this region in the node
+        const NodesStore = useNodesStore()
+        let activeNode = NodesStore.allNodes.find(node => node.id === nodeId);
+        activeNode.regions[regionIndex].start = start
+        activeNode.regions[regionIndex].end = end
+        console.log(activeNode.regions)
+        await NodesStore.update(nodeId, {'regions': activeNode.regions})
+
 
 
     }
 
-
-    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode }
+    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode, updateRegionTiming }
 })

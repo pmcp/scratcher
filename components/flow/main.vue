@@ -80,7 +80,7 @@ onMounted(() => {
 
     <template :key="id" #node-song-default="{id, data }">
       <Handle type="target" :position="Position.Left" :on-connect="onConnect" />
-      <AudioPlayer v-if="data.src" :data="data" class="w-96" :src="data.src" :options="props.options" :id="id">
+      <AudioPlayer v-if="data.src" :data="data" class="w-96" :src="data.src" :options="props.options" :nodeId="id">
         <template v-slot:actionButtons>
           <div class="p-4 flex gap-2">
             <UiButtonRect @click="cloneNode(id)">

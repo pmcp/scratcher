@@ -1,18 +1,31 @@
 
 export const useNodesStore = defineStore('nodes', () => {
     const Pb = usePbStore()
+    const RegionsStore = useRegionsStore()
     const allNodes = ref([])
 
     const setNodes = function(items){
         console.log({
             store: 'nodes',
             var: 'setNodes',
-            input: items
+            input: items,
         })
         allNodes.value = items
     }
     const all = computed(() => {
+        // get the colors of the regions and add them to the regions array
+
+
         return allNodes.value.map(node => {
+            console.log('NODE', node)
+
+
+            // Add color to region
+            const regionWithColors = node.regions.map((region, i) => {
+                    return {...region, color: RegionsStore.regionColors[i]}
+                }
+            )
+
             return {
                 id: node.id,
                 type: node.type,
@@ -24,6 +37,7 @@ export const useNodesStore = defineStore('nodes', () => {
                     title: node.expand.data.title,
                     bpm: node.expand.data.bpm,
                     peaks: node.expand.data.peaks,
+                    regions: regionWithColors,
                     // TODO: Move url to env
                     src: `http://127.0.0.1:8090/api/files/rtge3objv4nrxgx/${node.expand.data.id}/${node.expand.data.src}`
                 }

@@ -13,6 +13,9 @@ const props = defineProps({
   },
   options:{
     type:Object,
+  },
+  nodeId:{
+    type: String
   }
 })
 
@@ -62,9 +65,7 @@ function setBPM({targetBpm, preservePitch}){
 
 <!--    </div>-->
     <UiPane>
-<!--      <pre>{{ data }}</pre>-->
-
-      <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src"  :options="options"/>
+      <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src" :nodeId="nodeId" :options="options" :regions="data.regions"/>
     </UiPane>
 
     <slot name="sectionButtons" />
