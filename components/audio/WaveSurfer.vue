@@ -55,8 +55,8 @@ onMounted(async()=>{
   waveSurfer.value.on('decode', () => {
     // Get AudioBuffer data
     audioBuffer.value = waveSurfer.value.getDecodedData()
-    // const peaks = exportPeaks()
-    // console.log(peaks)
+    const peaks = waveSurfer.value.exportPeaks()
+    console.log(peaks)
   })
 
 

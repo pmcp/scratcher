@@ -67,12 +67,12 @@ defineProps({
 }
 
 .button-square__variation--2 {
-  background-color: #d42a02;
-  box-shadow: rgba(0, 0, 0, 0.377) 10px 10px 8px, #fb702c 2px 2px 10px 0px inset,
-  #d42a02 -4px -4px 1px 0px inset;
+  background-color: var(--color5);
+  box-shadow: rgba(0, 0, 0, 0.377) 10px 10px 8px,
+  #FDC7B4 1.5px 1.5px 1px 0px inset, var(--color5) -3.2px -3.2px 8px 0px inset;
   cursor: pointer;
   transition: 0.1s ease-in-out;
-  color: var(--color2);
+  color: white;
 }
 .button-square__variation--3 {
   background-color: #545251;
@@ -82,6 +82,35 @@ defineProps({
   transition: 0.1s ease-in-out;
   color: white;
 }
+
+.button-square__variation--4 {
+  background-color: var(--color11);
+  box-shadow: rgba(0, 0, 0, 0.377) 10px 10px 8px,
+  #FFC2D2 1.5px 1.5px 1px 0px inset, var(--color11) -3.2px -3.2px 8px 0px inset;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  color: white;
+}
+
+.button-square__variation--5 {
+  background-color: var(--color12);
+  box-shadow: rgba(0, 0, 0, 0.377) 10px 10px 8px,
+  #B4E0F9 1.5px 1.5px 1px 0px inset, var(--color12) -3.2px -3.2px 8px 0px inset;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  color: white;
+}
+
+
+.button-square__variation--6 {
+  background-color: var(--color13);
+  box-shadow: rgba(0, 0, 0, 0.377) 10px 10px 8px,
+  #FBCFCC 1.5px 1.5px 1px 0px inset, var(--color11) -3.2px -3.2px 8px 0px inset;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+  color: white;
+}
+
 
 .button-square__variation--1:active {
   box-shadow: rgba(0, 0, 0, 0.377) 0px 0px 0px, inset 0.5px 0.5px 4px #000000,
@@ -97,6 +126,24 @@ defineProps({
   box-shadow: rgba(0, 0, 0, 0.377) 0px 0px 0px, inset 0.5px 0.5px 4px #000000,
   #545251 -3.2px -3.2px 8px 0px inset;
 }
+
+.button-square__variation--4:active {
+  box-shadow: rgba(0, 0, 0, 0.377) 0px 0px 0px, inset 0.5px 0.5px 4px #000000,
+  var(--color11) -3.2px -3.2px 8px 0px inset;
+}
+
+.button-square__variation--5:active {
+  box-shadow: rgba(0, 0, 0, 0.377) 0px 0px 0px, inset 0.5px 0.5px 4px #000000,
+  var(--color12) -3.2px -3.2px 8px 0px inset;
+}
+
+.button-square__variation--6:active {
+  box-shadow: rgba(0, 0, 0, 0.377) 0px 0px 0px, inset 0.5px 0.5px 4px #000000,
+  var(--color13) -3.2px -3.2px 8px 0px inset;
+}
+
+
+
 .button-square__btn:active .button-square__text {
   transform: translateY(0.5px);
 }

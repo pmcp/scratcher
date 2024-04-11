@@ -3,9 +3,9 @@ import {guess} from "web-audio-beat-detector";
 export const usePlayerStore = defineStore('player', () => {
     const defaultOptions = ref({
         height: 160,
-        progressColor: '#e03639',
-        waveColor: '#e7e7e7',
-        cursorColor: '#FFDDDD',
+        progressColor: '#FA5F28',
+        waveColor: '#F2F2F2',
+        cursorColor: '#F2F2F2',
         barWidth: 6,
         barGap: 1,
         barRadius: 8,

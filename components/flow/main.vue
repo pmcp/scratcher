@@ -94,11 +94,25 @@ onMounted(() => {
 
         <template v-slot:sectionButtons>
           <div class="p-4 flex gap-2" >
-            <UiButtonSquare @click="toggleSection(i)" :variation="3" align="left" v-for="i in 4">
+            <UiButtonSquare @click="toggleSection(1)" :variation="2" align="left">
               <template v-slot:label>
-                {{ i }}
+                1
               </template>
-
+            </UiButtonSquare>
+            <UiButtonSquare @click="toggleSection(2)" :variation="6" align="left">
+              <template v-slot:label>
+                2
+              </template>
+            </UiButtonSquare>
+            <UiButtonSquare @click="toggleSection(3)" :variation="4" align="left">
+              <template v-slot:label>
+                3
+              </template>
+            </UiButtonSquare>
+            <UiButtonSquare @click="toggleSection(4)" :variation="5" align="left">
+              <template v-slot:label>
+                4
+              </template>
             </UiButtonSquare>
           </div>
         </template>
