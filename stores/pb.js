@@ -38,7 +38,6 @@ export const usePbStore = defineStore('Pb', () => {
     }
     const getItem = async function(collection, id, expand){
         // TODO: get this out of here
-        console.log('HERE')
         await $pb.collection('users').authWithPassword('scritchtest@maartenlauwaert.eu', 'zwm_brx6cuv0QVF5gqr');
 
         console.log('pb Store', 'getItem', 'params:', {collection}, {id}, {expand})

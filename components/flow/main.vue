@@ -38,6 +38,7 @@ const props = defineProps({
 
 
 onNodeDragStop((value) => {
+  console.log(value)
   flowStore.flowUpdate('onNodeDragStop', value)
 })
 

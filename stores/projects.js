@@ -26,7 +26,8 @@ export const useProjectsStore = defineStore('projects', () => {
 
     const setProject =  function(project) {
         console.log('setting project', project)
-        activeProject.value = {...project}
+
+        activeProject.value = project
     }
 
     const subscribeProject = function(project) {

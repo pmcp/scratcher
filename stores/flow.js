@@ -111,6 +111,7 @@ export const useFlowStore = defineStore('flow', () => {
         if(event === 'onNodeDragStop') {
             const newPosition = val.node.position
             const activeNode = nodesStore.allNodes.find(node => node.id === val.node.id);
+            console.log(activeNode.position, newPosition)
             const newData = {...activeNode, position: newPosition}
             const updatedNode = await nodesStore.update(val.node.id, newData)
         }
