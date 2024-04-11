@@ -134,7 +134,7 @@ onMounted(async()=>{
   // })
 
   wsRegions.on('region-updated', (region) => {
-    console.log(region)
+    console.log('regionnnn', region)
     console.log(props.nodeId)
     flowStore.updateRegionTiming(props.nodeId, region.start, region.end, region.color)
   })

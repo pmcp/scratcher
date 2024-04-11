@@ -1,34 +1,39 @@
 
 export const useRegionsStore = defineStore('regions', () => {
 
-    const regionColors = [
-        'rgba(250, 95, 40, .4)',
-        'rgba(241, 38, 24, .4)',
-        'rgba(230, 44, 94, .4)',
-        'rgba(66, 156, 206, .4)'
-    ]
-    const defaultRegions = [
-        {
-            status: 0,
-            start: 0,
-            end: 10,
+    const colors = {
+        'color1': 'rgba(250, 95, 40, .4)',
+        'color2': 'rgba(241, 38, 24, .4)',
+        'color3': 'rgba(230, 44, 94, .4)',
+        'color4': 'rgba(66, 156, 206, .4)'
+    }
+
+    const buttons = [{
+            active: false,
+            color: 'color1'
+        }, {
+            active: false,
+            color: 'color2'
         },
         {
-            status: 0,
-            start: 10,
-            end: 20
+            active: false,
+            color: 'color3'
         },
         {
-            status: 0,
-            start: 20,
-            end: 30
-        },
-        {
-            status: 0,
-            start: 30,
-            end: 40
+            active: false,
+            color: 'color4'
         }
     ]
+    const colorsToButtons = {
+        'rgba(250, 95, 40, .4)': 0,
+        'rgba(241, 38, 24, .4)': 1,
+        'rgba(230, 44, 94, .4)': 2,
+        'rgba(66, 156, 206, .4)': 3
+    }
 
-    return { defaultRegions, regionColors }
+
+    const regionColors = buttons.map(button => colors[button.color])
+
+
+    return { regionColors, colorsToButtons, buttons, colors }
 })

@@ -36,6 +36,7 @@ const props = defineProps({
 })
 
 
+
 onNodeDragStop((value) => {
   flowStore.flowUpdate('onNodeDragStop', value)
 })
@@ -51,16 +52,20 @@ onEdgeDoubleClick((value) => {
   flowStore.removeEdges([value.edge.id])
 })
 
-const cloneNode = ((val) => {
+const cloneNode = (val) => {
   console.log('going to clone node', val)
   flowStore.cloneNode(val)
-})
+}
 
-const removeNode = ((val) => {
+const removeNode = (val) => {
   // Get connected edges
   const connectedEdges = getConnectedEdges(val)
   flowStore.removeNode(val, connectedEdges)
-})
+}
+
+const toggleSection = (buttonId, nodeId) => {
+  flowStore.toggleSection(nodeId, buttonId)
+}
 
 onMounted(() => {
   // onNodeClick((event) => {
@@ -94,22 +99,22 @@ onMounted(() => {
 
         <template v-slot:sectionButtons>
           <div class="p-4 flex gap-2" >
-            <UiButtonSquare @click="toggleSection(1)" :variation="2" align="left">
+            <UiButtonSquare @click="toggleSection(0, id)" :variation="2" align="left">
               <template v-slot:label>
                 1
               </template>
             </UiButtonSquare>
-            <UiButtonSquare @click="toggleSection(2)" :variation="6" align="left">
+            <UiButtonSquare @click="toggleSection(1, id)" :variation="6" align="left">
               <template v-slot:label>
                 2
               </template>
             </UiButtonSquare>
-            <UiButtonSquare @click="toggleSection(3)" :variation="4" align="left">
+            <UiButtonSquare @click="toggleSection(2, id)" :variation="4" align="left">
               <template v-slot:label>
                 3
               </template>
             </UiButtonSquare>
-            <UiButtonSquare @click="toggleSection(4)" :variation="5" align="left">
+            <UiButtonSquare @click="toggleSection(3, id)" :variation="5" align="left">
               <template v-slot:label>
                 4
               </template>

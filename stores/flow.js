@@ -67,8 +67,7 @@ export const useFlowStore = defineStore('flow', () => {
             const node = {
                 type: 'song-default',
                 position: position,
-                data: fileId,
-                regions: RegionsStore.defaultRegions
+                data: fileId
             }
             const nodeId = await NodesStore.create(node)
             return nodeId.id;
@@ -199,23 +198,47 @@ export const useFlowStore = defineStore('flow', () => {
     }
 
 
-    const updateRegionTiming = async function(nodeId, start, end, regionColor) {
-        console.log(nodeId, start, end, regionColor)
-        // TODO: I'm finding out with region this is, by checking the color. Not the most robust way of doing this.
+    const updateRegionTiming = async function(nodeId, start, end, regionColor, buttonType) {
+        console.log(nodeId, start, end, regionColor, buttonType)
         const RegionsStore = useRegionsStore()
-        const regionIndex = RegionsStore.regionColors.findIndex(color => color === regionColor)
-        console.log('Got region index', regionIndex)
-        // With this index: update the region timing of this region in the node
+        if(regionColor) {
+            buttonType = RegionsStore.colorsToButtons[regionColor]
+        }
         const NodesStore = useNodesStore()
         let activeNode = NodesStore.allNodes.find(node => node.id === nodeId);
-        activeNode.regions[regionIndex].start = start
-        activeNode.regions[regionIndex].end = end
-        console.log(activeNode.regions)
+
+
+        const activeRegion = activeNode.regions.findIndex(region => region.buttonType === buttonType)
+        if(activeRegion > -1) {
+            activeNode.regions[activeRegion].start = start
+            activeNode.regions[activeRegion].end = end
+        } else {
+            activeNode.regions.push({start, end, buttonType, active: true })
+        }
         await NodesStore.update(nodeId, {'regions': activeNode.regions})
-
-
-
     }
 
-    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode, updateRegionTiming }
+    const toggleSection = async function(nodeId, buttonType) {
+        console.log(nodeId, buttonType)
+        const NodesStore = useNodesStore()
+        // Check if Node already has regions
+        let activeNode = NodesStore.allNodes.find(node => node.id === nodeId);
+        const start = (buttonType+1)*10;
+        const end = (buttonType+1)*20;
+        if(!activeNode.regions) {
+            activeNode.regions = [{ start, end, buttonType, active: true}]
+        } else {
+            // check if this region already exists
+            if(activeNode.regions[buttonType]) {
+                activeNode.regions[buttonType].active = !activeNode.regions[buttonType].active
+            } else {
+                activeNode.regions.push({ start, end, buttonType, active: true})
+            }
+
+        }
+        await NodesStore.update(nodeId, {'regions': activeNode.regions})
+    }
+
+
+    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode, updateRegionTiming, toggleSection }
 })
