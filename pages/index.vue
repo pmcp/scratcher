@@ -4,3 +4,6 @@
   <ProjectMain :id="null" />
 </template>
 
+<style>
+@import '/assets/styles/main.css';
+</style>

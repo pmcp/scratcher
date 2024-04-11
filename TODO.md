@@ -1,5 +1,8 @@
 # MAKE IT WORK
-
+- NEXT UP: "active path"
+- turn main module into Project component
+  - BPM
+- Add Notes component
 
 # MAKE IT BEAUTIFUL
 https://jerosoler.github.io/waveform-path/

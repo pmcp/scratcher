@@ -26,7 +26,7 @@ export const useProjectsStore = defineStore('projects', () => {
 
     const setProject =  function(project) {
         console.log('setting project', project)
-
+        // TODO: SET NODE BY NODE?
         activeProject.value = project
     }
 
