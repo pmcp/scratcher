@@ -20,7 +20,7 @@ export const usePbStore = defineStore('Pb', () => {
 
     const update = async function(collection, item, data){
         // TODO: Make this universal and permeated
-        await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
+        await $pb.collection('users').authWithPassword('scritchtest@maartenlauwaert.eu', 'zwm_brx6cuv0QVF5gqr');
         return await $pb.collection(collection).update(item, data);
     }
 
@@ -38,7 +38,8 @@ export const usePbStore = defineStore('Pb', () => {
     }
     const getItem = async function(collection, id, expand){
         // TODO: get this out of here
-        await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
+        console.log('HERE')
+        await $pb.collection('users').authWithPassword('scritchtest@maartenlauwaert.eu', 'zwm_brx6cuv0QVF5gqr');
 
         console.log('pb Store', 'getItem', 'params:', {collection}, {id}, {expand})
         return await $pb.collection(collection).getOne(id, {
@@ -49,7 +50,7 @@ export const usePbStore = defineStore('Pb', () => {
 
     const uploadFiles = async function(file){
         // TODO: Make this universal and permeated
-        await $pb.collection('users').authWithPassword('hi@maartenlauwaert.eu', 'pmcppaulmcparty');
+        await $pb.collection('users').authWithPassword('scritchtest@maartenlauwaert.eu', 'zwm_brx6cuv0QVF5gqr');
 
         console.log($pb.authStore.isValid);
         console.log($pb.authStore.token);

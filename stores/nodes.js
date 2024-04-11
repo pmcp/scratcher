@@ -24,7 +24,8 @@ export const useNodesStore = defineStore('nodes', () => {
                     title: node.expand.data.title,
                     bpm: node.expand.data.bpm,
                     peaks: node.expand.data.peaks,
-                    src: `https://scritch.pockethost.io/api/files/rtge3objv4nrxgx/${node.expand.data.id}/${node.expand.data.src}`
+                    // TODO: Move url to env
+                    src: `http://127.0.0.1:8090/api/files/rtge3objv4nrxgx/${node.expand.data.id}/${node.expand.data.src}`
                 }
             }
         })

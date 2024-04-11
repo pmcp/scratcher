@@ -1,3 +1,4 @@
 <template>
-  <PocPocketbase/>
+<!--  <PocPocketbase/>-->
+  <PocAccount />
 </template>

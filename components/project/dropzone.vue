@@ -9,6 +9,7 @@ const { x , y } = useMouse()
 async function onDrop(files) {
   flowStore.draggingFiles(false)
   const route = useRoute()
+  console.log('here')
   const project = await flowStore.uploadFiles(files, { x: x.value, y: y.value }, route.path)
 
 }

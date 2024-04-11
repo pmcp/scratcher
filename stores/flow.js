@@ -7,6 +7,7 @@ export const useFlowStore = defineStore('flow', () => {
     const Pb = usePbStore()
     const login = async function(name, pass){
         // Login
+
         console.log('logging in user', name, pass)
         const UserStore = useUserStore()
         const user = await Pb.doAuth(name, pass)
@@ -52,6 +53,7 @@ export const useFlowStore = defineStore('flow', () => {
 
 
     const uploadFiles = async function(files, position, project){
+        console.log('upload')
         const ProjectsStore = useProjectsStore()
         const NodesStore = useNodesStore()
 
