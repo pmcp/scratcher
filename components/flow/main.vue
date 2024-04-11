@@ -127,7 +127,7 @@ onMounted(() => {
       </AudioPlayer>
       <Handle type="source" :position="Position.Right"  />
     </template>
-<!--    <Background />-->
+    <Background />
 <!--    <MiniMap />-->
     <Controls />
     <PocControls />

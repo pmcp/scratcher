@@ -37,6 +37,10 @@ defineProps({
   animation: blink 150ms infinite;
 }
 
+.led__type4 {
+  animation: blink 80ms infinite;
+}
+
 
 @keyframes blink {
   from { background-color: var(--color7);
