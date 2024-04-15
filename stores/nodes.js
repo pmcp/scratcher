@@ -14,16 +14,13 @@ export const useNodesStore = defineStore('nodes', () => {
     }
     const all = computed(() => {
         // get the colors of the regions and add them to the regions array
-
-
         return allNodes.value.map(node => {
-
             // Add color to region
             let regionWithColors = []
             console.log('GOT REGIONS', node.regions)
             if(node.regions) {
                 const onlyActiveRegions = node.regions.filter(region => region.active)
-                regionWithColors = onlyActiveRegions.map((region) => {
+                regionWithColors = onlyActiveRegions.map((region, index) => {
                         return {...region, color: RegionsStore.colors[RegionsStore.buttons[region.buttonType].color]}
                     }
                 )
@@ -72,5 +69,10 @@ export const useNodesStore = defineStore('nodes', () => {
         return node
     }
 
-    return { allNodes, all, update, create, setNodes, remove, getSingle }
+    const getNext = (nodeId) => {
+        // Should calculate this on edges
+
+    }
+
+    return { allNodes, all, update, create, setNodes, remove, getSingle, getNext }
 })

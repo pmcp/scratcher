@@ -1,7 +1,6 @@
 <template>
   <div class="w-full">
     <div ref="wavesurferContainer" @click="togglePlay" class="w-full"></div>
-    <pre>{{ id }}</pre>
     <UProgress v-if="!ready" animation="carousel" />
   </div>
 <!--    <div ref="waveTimeline"></div>-->
@@ -31,17 +30,23 @@ const props = defineProps({
   },
   nodeId: {
     type:String,
+  },
+  itemId: {
+    type:String,
+  },
+  peaks: {
+    type:Array,
   }
 })
 
-// UI
+
 const ready = ref(false)
 const loadingValue = ref(0)
 
 const waveSurfer = ref(null);
 const wavesurferContainer = ref(null);
 
-
+const activeRegion = ref(null)
 
 const togglePlay = function(){
   if(waveSurfer.value.isPlaying()) {
@@ -57,14 +62,16 @@ const audioBuffer = ref(null)
 onMounted(async()=>{
   // TODO: add loader
   let wsOptions = Object.assign({
-        container: wavesurferContainer.value,
+        container: wavesurferContainer.value
       },
       props.options);
 
+  console.log(props.options)
   waveSurfer.value = WaveSurfer.create(wsOptions);
   // Add Regions plugin to this WaveSurfer instance
   const wsRegions = waveSurfer.value.registerPlugin(RegionsPlugin.create())
 
+  // waveSurfer.value.load(props.src, props.peaks);
   waveSurfer.value.load(props.src);
 
 
@@ -76,21 +83,25 @@ onMounted(async()=>{
 
 
 
-  waveSurfer.value.on('decode', () => {
-    // Get AudioBuffer data
-    audioBuffer.value = waveSurfer.value.getDecodedData()
-    const peaks = waveSurfer.value.exportPeaks()
-    console.log(peaks)
-  })
+  // waveSurfer.value.on('decode', () => {
+  //   // Get AudioBuffer data
+  //   console.log('peaks?', props.peaks)
+  //   if(props.peaks) return;
+  //   // TODO: if buffer is already set, skip this
+  //   audioBuffer.value = waveSurfer.value.getDecodedData()
+  //   const peaks = waveSurfer.value.exportPeaks()
+  //   flowStore.setPeaks(props.itemId, peaks)
+  //
+  // })
 
 
   const play = waveSurfer.value.getDecodedData()
 
   /** During audio loading */
-  waveSurfer.value.on('loading', (percent) => {
-    console.log('Loading', percent + '%')
-    loadingValue.value = percent
-  })
+  // waveSurfer.value.on('loading', (percent) => {
+  //   console.log('Loading', percent + '%')
+  //   loadingValue.value = percent
+  // })
 
   /** When the audio has been decoded */
   waveSurfer.value.on('decode', (duration) => {
@@ -104,6 +115,7 @@ onMounted(async()=>{
         end: props.regions[i].end,
         // Get the colors from regions store
         color: props.regions[i].color,
+        id: `node-${props.nodeId}_region-${i}`,
         drag: true,
         resize: true,
         minLength: 4,
@@ -115,14 +127,13 @@ onMounted(async()=>{
 
   /** When the audio is both decoded and can play */
   waveSurfer.value.on('ready', (duration) => {
-    console.log('Ready', duration + 's')
     ready.value = true;
   })
 
   /** When visible waveform is drawn */
-  waveSurfer.value.on('redrawcomplete', () => {
-    console.log('Redraw began')
-  })
+  // waveSurfer.value.on('redrawcomplete', () => {
+  //   console.log('Redraw began')
+  // })
 
   // Region reactivity
   // wsRegions.on('region-clicked', (region, e) => {
@@ -133,9 +144,36 @@ onMounted(async()=>{
   //   // // region.setOptions({ color: randomColor() })
   // })
 
+
+  // wsRegions.on('region-in', (region) => {
+  //   // console.log(wsRegions.regions)
+  //   console.log('region-in', region.id)
+  //   // if region is activeRegion, return
+  //   if(region.id === activeRegion.value) return;
+  //   // Set region as activeRegion
+  //   // activeRegion.value = wsRegions.regions.findIndex(r => r.id === region.id)
+  // })
+  //
+  // const RegionsStore = useRegionsStore()
+  // wsRegions.on('region-out', (region) => {
+  //   console.log('region out', region.id)
+  //   //
+  //   const newRegionNumber = region.id.slice(-1)*1+1;
+  //   if(newRegionNumber === wsRegions.regions.length) {
+  //     console.log('last region', newRegionNumber === wsRegions.regions.length)
+  //     // Is Last region
+  //   } else {
+  //     const nextRegionId = `node-${props.nodeId}_region-${newRegionNumber}`
+  //     console.log('OUT', 'region id:', region.id, 'new region number:', newRegionNumber, 'new region id', nextRegionId, 'regions length:', wsRegions.regions.length, 'last region:', newRegionNumber === wsRegions.regions.length)
+  //     // console.log(wsRegions.regions[newRegionNumber])
+  //     wsRegions.regions[newRegionNumber].play()
+  //
+  //
+  //   }
+  //
+  // })
+
   wsRegions.on('region-updated', (region) => {
-    console.log('regionnnn', region)
-    console.log(props.nodeId)
     flowStore.updateRegionTiming(props.nodeId, region.start, region.end, region.color)
   })
 

@@ -1,6 +1,6 @@
 
 export const useRegionsStore = defineStore('regions', () => {
-
+    const NodesStore= useNodesStore();
     const colors = {
         'color1': 'rgba(250, 95, 40, .4)',
         'color2': 'rgba(241, 38, 24, .4)',
@@ -30,6 +30,14 @@ export const useRegionsStore = defineStore('regions', () => {
         'rgba(230, 44, 94, .4)': 2,
         'rgba(66, 156, 206, .4)': 3
     }
+
+
+    // const allActiveRegions = computed(() => {
+    //     return NodesStore.all.reduce((acc, node) => {
+    //
+    //         return [...acc, ...node.data.regions]
+    //     }, [])
+    // })
 
 
     const regionColors = buttons.map(button => colors[button.color])

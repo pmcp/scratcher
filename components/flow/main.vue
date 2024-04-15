@@ -130,7 +130,7 @@ onMounted(() => {
     <Background />
 <!--    <MiniMap />-->
     <Controls />
-    <PocControls />
+<!--    <PocControls />-->
     <template #connection-line="{ sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition }">
       <FlowLineSnappable
           :source-x="sourceX"

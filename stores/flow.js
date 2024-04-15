@@ -200,6 +200,7 @@ export const useFlowStore = defineStore('flow', () => {
 
 
     const updateRegionTiming = async function(nodeId, start, end, regionColor, buttonType) {
+        // TODO: Now that I know how to set the Id of the region, can simplify all of this
         console.log(nodeId, start, end, regionColor, buttonType)
         const RegionsStore = useRegionsStore()
         if(regionColor) {
@@ -240,6 +241,18 @@ export const useFlowStore = defineStore('flow', () => {
         await NodesStore.update(nodeId, {'regions': activeNode.regions})
     }
 
+    const setPeaks = async function(itemId, peaks) {
+        // Save peaks to file
+        const ItemsStore = useItemsStore()
+        const data = {
+            peaks: peaks
+        }
+        console.log('gonna update', itemId, data)
+        const updatedItem = await ItemsStore.update(itemId, data)
 
-    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode, updateRegionTiming, toggleSection }
+
+    }
+
+
+    return { login, getProject, draggingFiles, uploadFiles, flowUpdate, connectEdge, removeEdges, removeNode, cloneNode, updateRegionTiming, toggleSection, setPeaks }
 })

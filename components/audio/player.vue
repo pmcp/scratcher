@@ -56,7 +56,6 @@ function setBPM({targetBpm, preservePitch}){
 <template>
   <div class="player__card flex flex-col w-96 relative">
 <!--    <UiRoster class="w-full absolute top-4 left-0 h-auto z-10"/>-->
-
     <slot name="actionButtons" />
 
 <!--    <div class="player__info">-->
@@ -64,8 +63,9 @@ function setBPM({targetBpm, preservePitch}){
 <!--      <div class="player__info__title">{{ data.artist }}</div>-->
 
 <!--    </div>-->
+
     <UiPane>
-      <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src" :nodeId="nodeId" :options="options" :regions="data.regions"/>
+      <AudioWaveSurfer v-if="src" ref="refWaveSurfer" :src="src" :nodeId="nodeId" :options="options" :regions="data.regions" :itemId="data.id" :peaks="data.peaks"/>
     </UiPane>
 
     <slot name="sectionButtons" />

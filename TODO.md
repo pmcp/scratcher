@@ -7,8 +7,17 @@
 # MAKE IT BEAUTIFUL
 https://jerosoler.github.io/waveform-path/
 
+# MAKE IT COLLABORATIVE
+- https://github.com/yjs/yjs/blob/master/README.md
+- https://syncedstore.org/docs/
+  - OR https://github.com/croatialu/pinia-plugin-yjs
+
+
+
 # MAKE IT FAST
 
+
+# MAKE IT SMART
 
 
 
